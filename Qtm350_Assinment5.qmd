@@ -1,0 +1,108 @@
+---
+title: "QTM350 Assinment5:  World Development Indicators Dataset(2020) Analysis"
+author: "XiPu Wang"
+date: "Oct.10 2024"
+format:
+  html: default
+  pdf: default
+bibliography: references.bib
+---
+
+```{python}
+#| echo: false
+# Load the dataset
+import pandas as pd
+
+df = pd.read_csv('wdi.csv')
+```
+
+## Question 3: Conduct exploratory data analysis on at least three indicators:
+```{python}
+#| echo: false
+# Summary statistics
+summary_stats = df[['gdp_per_capita', 'inflation_rate', 'unemployment_rate']].describe()
+summary_stats
+```
+
+From the output above, we can see that for all countries, the mean GDP is 20345, with a mininum value 259.02. The median GDP for all countries is 7587.58, while the largest GDP is 240862.18.  
+For inflation rate, the mean inflation is 12.49, with a standard deviation of 19.682. Among all countries, the lowest inflation is -6.68, the median inflation is 5.51, and the largest inflation is 171.205.  
+For the unemployment rate, the average unemployment rate is 7.26%, with a 5.82 standard deviation. The lowest unemployment rate among all is 0.13%, the average unemployment rate is 5.53%, and the largest unemployment rate is 37.8%.
+
+### Calculate the Correlation between life expectancy and GDP per capita
+```{python}
+#| echo: false
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy.stats import pearsonr
+
+data = df[['gdp_per_capita', 'life_expectancy']].dropna()
+corr_coef, p_value = pearsonr(data['gdp_per_capita'], data['life_expectancy'])
+
+print(f'Pearson correlation coefficient: {corr_coef:.2f}')
+```
+
+It turns out that the correlation coefficient is 0.64, which is quite strong, we will look this further through the graphs.
+
+
+
+## Question 4: Create at least two different types of plots to represent the analysis. 
+
+### Top 10 Countries by GDP per Capita
+
+```{python}
+#| echo: false
+#| label: fig-gdp-bar
+#| fig-cap: "Top 10 Countries by GDP per Capita in 2022"
+
+import matplotlib.pyplot as plt
+
+
+top_gdp = df[['country', 'gdp_per_capita']].dropna().sort_values(by='gdp_per_capita', ascending=False).head(10)
+
+# Plot
+plt.figure(figsize=(10,6))
+plt.bar(top_gdp['country'], top_gdp['gdp_per_capita'], color='skyblue')
+plt.title('Top 10 Countries by GDP per Capita in 2022')
+plt.xlabel('Country')
+plt.ylabel('GDP per Capita')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+```
+
+### Life Expectancy vs. GDP per Capita
+
+```{python}
+#| echo: false
+#| label: fig-life-exp-scatter
+#| fig-cap: "Life Expectancy vs. GDP per Capita"
+
+plt.figure(figsize=(10,6))
+plt.scatter(df['gdp_per_capita'], df['life_expectancy'], alpha=0.7)
+plt.title('Life Expectancy vs. GDP per Capita')
+plt.xlabel('GDP per Capita')
+plt.ylabel('Life Expectancy')
+plt.tight_layout()
+plt.show()
+```
+
+## Question 5: Key Statistics Table
+
+```{python}
+#| echo: false
+#| label: tbl-key-stats
+#| tbl-cap: "Key Statistics of Selected Indicators"
+
+# Create the table
+key_stats = df[['gdp_per_capita', 'life_expectancy', 'unemployment_rate']].agg(['mean', 'median', 'std']).round(2)
+key_stats
+```
+
+As shown in **Figure \@fig-gdp-bar**, the country with the highest GDP per capita is
+
+Refer to **Table \@tbl-key-stats** for a summary of key statistics.
+
+## Conclusion:
+For contries, there is a quite strong positive correlatio between life expectancy and GDP per Capita.  
+
+This theory is also supported by the paper referenced. (Goran Miladinov)
