@@ -4,7 +4,7 @@
 
 ## Published HTML Report
 
-[HTML Report on GitHub Pages](https://emoryPW.github.io/QTM350_HW5/report.html)
+[HTML Report on GitHub Pages](https://emoryPW.github.io/QTM350_HW5/Qtm350_Assinment5.html)
 
 ## Published Presentation Slides
 
