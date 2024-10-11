@@ -1,4 +1,4 @@
-## Repository URL
+## Repository URL (I've accidently push the file again twic when I was working on the another project, please ignore the most recent 3 commits)
 
 [GitHub Repository](https://github.com/emoryPW/QTM350_HW5)
 
